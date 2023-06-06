@@ -18,12 +18,14 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     address = models.TextField()
-    phone_number = models.PositiveBigIntegerField(unique=True, default=None)
+    phone_number = models.PositiveBigIntegerField(default=None)
     customer_id = models.PositiveIntegerField(unique=True, default=None)
 
 
 class Sale(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    sale_id = models.PositiveIntegerField(unique=True, default=None)
 
     automobile = models.ForeignKey(
         AutomobileVO,

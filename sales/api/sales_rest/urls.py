@@ -5,6 +5,8 @@ from .views import (
     api_delete_salesperson,
     api_list_customers,
     api_delete_customer,
+    api_list_sales,
+    api_delete_sale,
 )
 
 
@@ -21,4 +23,6 @@ urlpatterns = [
         api_delete_customer,
         name="api_delete_customer",
     ),
+    path("sales/", api_list_sales, name="api_list_sales"),
+    path("sales/<int:pk>", api_delete_sale, name="api_delete_sale"),
 ]
