@@ -76,7 +76,7 @@ def api_technician_list(request, employee_id=None):
             except KeyError:
                 return JsonResponse(
                     {"error": "Couldn't create technician"},
-                    status=400
+                    status=404
                 )
 
 
@@ -130,7 +130,7 @@ def api_appointment_list(request, vin=None):
         except Technician.DoesNotExist:
             return JsonResponse(
                 {"message": "Invalid technician"},
-                status=400,
+                status=404,
             )
 
         appointment = Appointment.objects.create(**content)
