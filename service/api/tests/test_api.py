@@ -59,7 +59,7 @@ class Tests(TransactionTestCase):
         body = {
             "date_time":"2023-04-20T14:39:00.000Z",
             "reason":"broken glass. everywhere.",
-            "vin":"2222",
+            "vin":"12345678912345678",
             "customer":"Warren Longmire",
             "technician":"1"
         }
