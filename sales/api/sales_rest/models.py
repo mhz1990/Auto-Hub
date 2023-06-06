@@ -11,14 +11,15 @@ class AutomobileVO(models.Model):
 class Salesperson(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    employee_id = models.IntegerField(max_length=5, unique=True)
+    employee_id = models.PositiveIntegerField(unique=True)
 
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     address = models.TextField()
-    phone_number = models.IntegerField(max_length=10)
+    phone_number = models.PositiveBigIntegerField(unique=True, default=None)
+    customer_id = models.PositiveIntegerField(unique=True, default=None)
 
 
 class Sale(models.Model):

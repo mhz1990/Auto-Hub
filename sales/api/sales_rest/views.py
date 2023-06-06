@@ -44,6 +44,17 @@ class CustomerListEncoder(ModelEncoder):
     ]
 
 
+class CustomerDetailEncoder(ModelEncoder):
+    model = Customer
+    properties = [
+        "first_name",
+        "last_name",
+        "address",
+        "phone_number",
+        "customer_id",
+    ]
+
+
 class SaleEncoder(ModelEncoder):
     model = Sale
     properties = [
@@ -71,7 +82,7 @@ def api_list_salespeople(request, employee_id=None):
             salesperson = Salesperson.objects.get(employee_id=content["employee_id"])
             return JsonResponse(
                 salesperson,
-                encoder=SalespersonDetailEncoder,
+                encoder=SalespersonListEncoder,
                 safe=False,
             )
         except Salesperson.DoesNotExist:
@@ -103,31 +114,31 @@ def api_delete_salesperson(request, pk):
 
 
 @require_http_methods(["GET", "POST"])
-def api_list_customers(request, customer_id=None, pk):
+def api_list_customers(request, customer_id=None):
     if request.method == "GET":
         if customer_id is not None:
-            customers = Customer.objects.filter(customer_id=customer_id)
+            customers = Customer.objects.filter(customer=customer_id)
         else:
             customers = Customer.objects.all()
         return JsonResponse(
             {"customers": customers},
-            encoder=CustomerListEncoder,
+            encoder=CustomerDetailEncoder,
         )
     else:
         content = json.loads(request.body)
         try:
-            customer = Customer.objects.get(customer_id=pk)
+            customer = Customer.objects.get(customer_id=content["customer_id"])
             return JsonResponse(
                 customer,
-                encoder=CustomerListEncoder,
+                encoder=CustomerDetailEncoder,
                 safe=False,
             )
         except Customer.DoesNotExist:
             try:
-                customer = customer.objects.create(**content)
+                customer = Customer.objects.create(**content)
                 return JsonResponse(
                     customer,
-                    encoder=CustomerListEncoder,
+                    encoder=CustomerDetailEncoder,
                     safe=False,
                 )
             except KeyError:
