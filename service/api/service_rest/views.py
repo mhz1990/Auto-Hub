@@ -33,6 +33,15 @@ class AppointmentDetailEncoder(ModelEncoder):
     model = Appointment
     properties = ["date_time", "reason", "status", "vin", "customer", "technician"]
 
+    def default(self, obj):
+        if isinstance(obj, Technician):
+            return {
+                "employee_id": obj.employee_id,
+                "first_name": obj.first_name,
+                "last_name": obj.last_name
+            }
+        return super().default(obj)
+
 
 @require_http_methods(["GET", "POST"])
 def api_technician_list(request, employee_id=None):
@@ -115,27 +124,21 @@ def api_appointment_list(request, vin=None):
     else:
         content = json.loads(request.body)
         try:
-            appointment = Appointment.objects.get(vin=content["vin"])
+            technician_id = content["technician"]
+            technician = Technician.objects.get(employee_id=technician_id)
+            content["technician"] = technician
+        except Technician.DoesNotExist:
             return JsonResponse(
-                appointment,
-                encoder=AppointmentDetailEncoder,
-                safe=False,
-                status=201
+                {"message": "Invalid technician"},
+                status=400,
             )
-        except Appointment.DoesNotExist:
-            try:
-                appointment = Appointment.objects.create(**content)
-                return JsonResponse(
-                    appointment,
-                    encoder=AppointmentDetailEncoder,
-                    safe=False,
-                    status=201
-                )  # Create new appointment
-            except KeyError:
-                return JsonResponse(
-                    {"error": "Couldn't create appointment"},
-                    status=400
-                )
+
+        appointment = Appointment.objects.create(**content)
+        return JsonResponse(
+            appointment,
+            encoder=AppointmentDetailEncoder,
+            safe=False,
+        )
 
 
 @require_http_methods(["GET", "DELETE", "PUT"])
