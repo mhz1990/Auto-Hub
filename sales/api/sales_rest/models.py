@@ -25,7 +25,7 @@ class Customer(models.Model):
 class Sale(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
-    sale_id = models.PositiveIntegerField(unique=True, default=None)
+    # sale_id = models.PositiveIntegerField(unique=True, default=None)
 
     automobile = models.ForeignKey(
         AutomobileVO,

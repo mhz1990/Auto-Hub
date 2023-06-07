@@ -31,32 +31,39 @@ class CustomerListEncoder(ModelEncoder):
 
 class SaleListEncoder(ModelEncoder):
     model = Sale
-    properties = ["price", "automobile", "salesperson", "customer", "sale_id"]
+    properties = ["price", "automobile", "salesperson", "customer"]
+    # properties = ["price", "automobile", "salesperson", "customer", "sale_id"]
 
-    # encoders = {
-    #     "automobile": AutomobileVOEncoder(),
-    #     "salesperson": SalespersonListEncoder(),
-    #     "customer": CustomerListEncoder(),
-    # }
+    encoders = {
+        "automobile": AutomobileVOEncoder(),
+        "salesperson": SalespersonListEncoder(),
+        "customer": CustomerListEncoder(),
+    }
 
     def default(self, o):
-        if isinstance(self, Salesperson):
+        if isinstance(o, Sale):
             return {
-                "first_name": o.first_name,
-                "last_name": o.last_name,
-                "employee_id": o.employee_id,
+                "automobile": o.automobile,
+                "salesperson": o.salesperson,
+                "customer": o.customer,
             }
-        if isinstance(self, Customer):
-            return {
-                "first_name": o.first_name,
-                "last_name": o.last_name,
-                "customer_id": o.customer_id,
-            }
-        if isinstance(self, AutomobileVO):
-            return {
-                "vin": o.vin,
-                "sold": o.sold,
-            }
+        # if isinstance(self, Salesperson):
+        #     return {
+        #         "first_name": o.first_name,
+        #         "last_name": o.last_name,
+        #         "employee_id": o.employee_id,
+        #     }
+        # if isinstance(self, Customer):
+        #     return {
+        #         "first_name": o.first_name,
+        #         "last_name": o.last_name,
+        #         "customer_id": o.customer_id,
+        #     }
+        # if isinstance(self, AutomobileVO):
+        #     return {
+        #         "vin": o.vin,
+        #         "sold": o.sold,
+        #     }
         return super().default(o)
 
 
@@ -170,7 +177,7 @@ def api_list_sales(request, vin=None):
     else:
         content = json.loads(request.body)
         try:
-            sale = Sale.objects.get(vin=content["vin"])
+            sale = Sale.objects.get(vin=content["automobile"][""])
             return JsonResponse(
                 sale,
                 encoder=SaleListEncoder,
@@ -189,6 +196,60 @@ def api_list_sales(request, vin=None):
                     {"error": "Couldn't create sale"},
                     status=400,
                 )
+        except Customer.DoesNotExist:
+            return JsonResponse(
+                {"message": "Invalid customer"},
+                status=404,
+            )
+
+
+# @require_http_methods(["GET", "POST"])
+# def api_list_sales(request, vin=None):
+#     if request.method == "GET":
+#         if vin is not None:
+#             sales = Sale.objects.filter(vin=vin)
+#         else:
+#             sales = Sale.objects.all()
+#         return JsonResponse(
+#             {"sales": sales},
+#             encoder=SaleListEncoder,
+#         )
+#     else:
+#         content = json.loads(request.body)
+#         salesperson = content.get("salesperson")
+#         sold = content.get("sold")
+#         customer = content.get("customer")
+#         try:
+#             if salesperson:
+#                 salesperson = Salesperson.objects.get(id=salesperson_id)
+#                 content["salesperson"] = salesperson
+#             if automobile:
+#                 sold = Sold.objects.get(id=sold_id)
+#                 content["vin"] = vin
+#             if customer_id:
+#                 customer = Customer.objects.get(id=customer_id)
+#                 content["customer"] = customer
+#             appointment = Sale.objects.create(**content)
+#             return JsonResponse(
+#                 appointment,
+#                 encoder=SaleListEncoder,
+#                 safe=False,
+#             )
+#         except Salesperson.DoesNotExist:
+#             return JsonResponse(
+#                 {"message": "Invalid salesperson"},
+#                 status=404,
+#             )
+#         except Sold.DoesNotExist:
+#             return JsonResponse(
+#                 {"message": "Invalid sold"},
+#                 status=404,
+#             )
+#         except Customer.DoesNotExist:
+#             return JsonResponse(
+#                 {"message": "Invalid customer"},
+#                 status=404,
+#             )
 
 
 @require_http_methods(["DELETE"])
