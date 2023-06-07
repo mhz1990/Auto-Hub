@@ -26,10 +26,12 @@ def poll(repeat=True):
             print(content)
             if "autos" in content:
                 for auto in content["autos"]:
-                    AutomobileVO.objects.update_or_create(
-                        href=auto["href"],
-                        defaults={"vin": auto["vin"], "sold": auto["sold"]}
-                    )
+                    vin = auto.get("vin")
+                    if vin:
+                        AutomobileVO.objects.update_or_create(
+                            vin=vin,
+                            defaults={"sold": auto.get("sold")}
+                        )
 
         except Exception as e:
             print(e, file=sys.stderr)
