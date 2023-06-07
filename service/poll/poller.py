@@ -9,10 +9,7 @@ sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "service_project.settings")
 django.setup()
 
-# Import models from service_rest, here. Ignore VS Code error hinting
-# from service_rest.models import Something
 
-# Import the necessary models and endpoints for the Automobiles API
 from service_rest.models import AutomobileVO
 
 
@@ -23,7 +20,6 @@ def poll(repeat=True):
             url = "http://project-beta-inventory-api-1:8000/api/automobiles"
             response = requests.get(url)
             content = json.loads(response.content)
-            print(content)
             if "autos" in content:
                 for auto in content["autos"]:
                     vin = auto.get("vin")

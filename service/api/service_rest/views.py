@@ -6,8 +6,6 @@ import json
 from common.json import ModelEncoder
 from .models import Technician, Appointment
 
-# Create your views here.
-
 
 class AutomobileVOEncoder(ModelEncoder):
     model = AutomobileVO
@@ -63,7 +61,7 @@ def api_technician_list(request, employee_id=None):
                 encoder=TechnicianDetailEncoder,
                 safe=False,
                 status=400
-            )  # Return existing technician
+            )
         except Technician.DoesNotExist:
             try:
                 technician = Technician.objects.create(**content)
@@ -72,7 +70,7 @@ def api_technician_list(request, employee_id=None):
                     encoder=TechnicianDetailEncoder,
                     safe=False,
                     status=400
-                )  # Create new technician
+                )
             except KeyError:
                 return JsonResponse(
                     {"error": "Couldn't create technician"},
