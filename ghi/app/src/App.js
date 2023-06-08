@@ -9,6 +9,10 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route index element={<ManufacturerList manufacturers={props.manufacturers} />} />
+          <Route index element={<ModelList models={props.models} />} />
+          <Route index element={<AutomobileList automobiles={props.automobiles} />} />
+
         </Routes>
       </div>
     </BrowserRouter>
