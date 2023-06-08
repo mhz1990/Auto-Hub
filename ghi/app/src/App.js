@@ -6,6 +6,7 @@ import ModelList from "./ModelList";
 import AutomobileList from './AutomobileList';
 import ManufacturerForm from './ManufacturerForm';
 import ModelForm from './ModelForm';
+import AutomobileForm from './AutomobileForm';
 
 function App(props) {
   const { manufacturers = [], models = [], autos = [] } = props;
@@ -27,9 +28,9 @@ function App(props) {
             index
             element={<AutomobileList automobiles={autos} />}
           />
-          <Route path="/manufacturers/create" element={<ManufacturerForm />} />
-          <Route path="/models/create" element={<ModelForm />} />
-          <Route path="/automobiles/create">
+          <Route path="/manufacturers/create/" element={<ManufacturerForm />} />
+          <Route path="/models/create/" element={<ModelForm />} />
+          <Route path="/automobiles/create/">
             <Route path="new" element={<AutomobileForm />} />
           </Route>
         </Routes>

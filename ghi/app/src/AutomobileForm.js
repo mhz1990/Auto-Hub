@@ -7,22 +7,22 @@ class AutomobileForm extends React.Component {
             color: '',
             year: '',
             vin: '',
-            // model: '',
-            // models: [],
+            model: '',
+            models: [],
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeColor = this.handleChangeColor.bind(this);
         this.handleChangeYear = this.handleChangeYear.bind(this);
         this.handleChangeVin = this.handleChangeVin.bind(this);
-        // this.handleChangeModel = this.handleChangeModel.bind(this);
+        this.handleChangeModel = this.handleChangeModel.bind(this);
     }
 
     async componentDidMount() {
         const url = 'http://localhost:8100/api/models/';
 
         const response = await fetch(url);
-
+        
         if (response.ok) {
             const data = await response.json();
             this.setState({ models: data.models });
