@@ -10,9 +10,11 @@ function ManufacturerList(props) {
       </thead>
       <tbody>
         {props.manufacturers.map((manufacturer) => {
-          <tr key={manufacturer.id}>
-            <td>{manufacturer.name}</td>
-          </tr>
+          return (
+            <tr key={manufacturer.id}>
+              <td>{manufacturer.name}</td>
+            </tr>
+          )
         })}
       </tbody>
     </table>
