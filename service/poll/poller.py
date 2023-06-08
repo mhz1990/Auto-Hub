@@ -15,7 +15,7 @@ from service_rest.models import AutomobileVO
 
 def poll(repeat=True):
     while True:
-        print('Service poller polling for data')
+        print("Service poller polling for data")
         try:
             url = "http://project-beta-inventory-api-1:8000/api/automobiles"
             response = requests.get(url)
@@ -25,14 +25,13 @@ def poll(repeat=True):
                     vin = auto.get("vin")
                     if vin:
                         AutomobileVO.objects.update_or_create(
-                            vin=vin,
-                            defaults={"sold": auto.get("sold")}
+                            vin=vin, defaults={"sold": auto.get("sold")}
                         )
 
         except Exception as e:
             print(e, file=sys.stderr)
 
-        if (not repeat):
+        if not repeat:
             break
 
         time.sleep(60)
