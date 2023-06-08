@@ -18,12 +18,12 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     address = models.TextField()
-    phone_number = models.PositiveBigIntegerField(default=None)
+    phone_number = models.CharField(max_length=14, default=None)
     customer_id = models.PositiveIntegerField(unique=True, default=None)
 
 
 class Sale(models.Model):
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.FloatField()
 
     # sale_id = models.PositiveIntegerField(unique=True, default=None)
 
