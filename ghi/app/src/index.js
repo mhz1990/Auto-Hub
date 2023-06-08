@@ -41,7 +41,7 @@ async function loadModels() {
 loadModels();
 
 async function loadAutomobiles() {
-  const response = await fetch('http://localhost:8001/api/automobiles/');
+  const response = await fetch('http://localhost:8100/api/automobiles/');
   if (response.ok) {
     const data = await response.json();
     root.render(

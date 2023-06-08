@@ -1,24 +1,22 @@
 import React from 'react'
 
 function ManufacturerList(props) {
-    return (
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Manufacturer</th>
+  return (
+    <table className="table table-striped">
+      <thead>
+        <tr>
+          <th>Manufacturer</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.manufacturers.map((manufacturer) => {
+          <tr key={manufacturer.id}>
+            <td>{manufacturer.name}</td>
           </tr>
-        </thead>
-        <tbody>
-          {props.manufacturers.map((manufacturer) => {
-            return (
-              <tr key={manufacturer.id}>
-                <td>{manufacturer.name}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    );
-  }
+        })}
+      </tbody>
+    </table>
+  );
+}
 
-  export default ManufacturerList;
+export default ManufacturerList;
