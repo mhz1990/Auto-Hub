@@ -21,10 +21,11 @@ function AutomobileList(props) {
               <td>{automobile.sold}</td>
               <td>{automobile.model.name}</td>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  }
+          )
+        })}
+      </tbody>
+    </table>
+  );
+}
 
-  export default AutomobileList;
+export default AutomobileList;
