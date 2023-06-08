@@ -26,7 +26,7 @@ async function fetchData() {
         <App
           manufacturers={manufacturersData.manufacturers}
           models={modelsData.models}
-          automobiles={automobilesData.automobiles}
+          autos={automobilesData.autos}
         />
       </React.StrictMode>
     );

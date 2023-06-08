@@ -6,7 +6,7 @@ import ModelList from "./ModelList";
 import AutomobileList from './AutomobileList';
 
 function App(props) {
-  const { manufacturers = [], models = [], automobiles = [] } = props;
+  const { manufacturers = [], models = [], autos = [] } = props;
 
   return (
     <BrowserRouter>
@@ -23,7 +23,7 @@ function App(props) {
           <Route
             path="/automobiles"
             index
-            element={<AutomobileList automobiles={automobiles} />}
+            element={<AutomobileList automobiles={autos} />}
           />
         </Routes>
       </div>
