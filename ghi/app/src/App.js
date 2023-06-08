@@ -4,6 +4,8 @@ import Nav from './Nav';
 import ManufacturerList from "./ManufacturerList";
 import ModelList from "./ModelList";
 import AutomobileList from './AutomobileList';
+import ManufacturerForm from './ManufacturerForm';
+import ModelForm from './ModelForm';
 
 function App(props) {
   const { manufacturers = [], models = [], autos = [] } = props;
@@ -25,6 +27,8 @@ function App(props) {
             index
             element={<AutomobileList automobiles={autos} />}
           />
+          <Route path="/manufacturers/create" element={<ManufacturerForm />} />
+          <Route path="/models/create" element={<ModelForm />} />
         </Routes>
       </div>
     </BrowserRouter>
