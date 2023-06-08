@@ -11,12 +11,12 @@ function ModelList(props) {
       </thead>
       <tbody>
         {props.models.map((model) => (
-            <tr key={model.id}>
-              <td>{model.name}</td>
-              <td>
-                <img src={model.picture_url} alt={model.name} style={{ height: '50px' }} />
-              </td>
-            </tr>
+          <tr key={model.id}>
+            <td>{model.name}</td>
+            <td>
+              <img src={model.picture_url} alt={model.name} style={{ height: '50px' }} />
+            </td>
+          </tr>
         ))}
       </tbody>
     </table>

@@ -4,7 +4,7 @@ import App from './App';
 
 async function fetchData() {
   try {
-    const [manufacturersResponse, modelsResponse, automobilesResponse, customersResponse, salespeopleResponse, salesResponse, salespersonHistoryResponse] = await Promise.all([
+    const [manufacturersResponse, modelsResponse, automobilesResponse, customersResponse, salespeopleResponse, salesResponse, salespersonHistoryResponse, techniciansResponse] = await Promise.all([
       fetch('http://localhost:8100/api/manufacturers/'),
       fetch('http://localhost:8100/api/models/'),
       fetch('http://localhost:8100/api/automobiles/'),
@@ -12,6 +12,7 @@ async function fetchData() {
       fetch('http://localhost:8090/api/sales/'),
       fetch('http://localhost:8090/api/salespeople/'),
       fetch('http://localhost:8090/api/salespersonHistory/'),
+      fetch('http://localhost:8080/api/technicians/'),
 
 
     ]);
@@ -20,7 +21,7 @@ async function fetchData() {
       throw new Error('Failed to fetch data');
     }
 
-    const [manufacturersData, modelsData, automobilesData, customersData, salespersonsData, salesData, salespersonHistoryData] = await Promise.all([
+    const [manufacturersData, modelsData, automobilesData, customersData, salespersonsData, salesData, salespersonHistoryData, techniciansData] = await Promise.all([
       manufacturersResponse.json(),
       modelsResponse.json(),
       automobilesResponse.json(),
@@ -28,6 +29,7 @@ async function fetchData() {
       salespersonsResponse.json(),
       salesResponse.json(),
       salespersonHistoryResponse.json(),
+      techniciansResponse.json(),
     ]);
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -41,6 +43,7 @@ async function fetchData() {
           salespersons={salespersonsData.salespersons}
           sales={salesData.sales}
           salespersonHistory={salespersonHistoryData.salespersonHistoryData}
+          technicians={techniciansData.technicians}
         />
       </React.StrictMode>
     );

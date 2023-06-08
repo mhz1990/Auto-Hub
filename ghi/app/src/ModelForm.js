@@ -16,43 +16,7 @@ class ModelForm extends React.Component {
     this.handleChangeManufacturer = this.handleChangeManufacturer.bind(this);
   }
 
-  async componentDidMount() {
-    const url = 'http://localhost:8100/api/manufacturers/';
-
-    const response = await fetch(url);
-
-    if (response.ok) {
-      const data = await response.json();
-      this.setState({ manufacturers: data.manufacturers });
-    }
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-    const data = { ...this.state };
-    delete data.manufacturers;
-
-    const manufacturerUrl = 'http://localhost:8100/api/manufacturers/';
-    const fetchConfig = {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const response = await fetch(manufacturerUrl, fetchConfig);
-    if (response.ok) {
-      const newModel = await response.json();
-      console.log(newModel);
-      this.setState({
-        name: '',
-        pictureUrl: '',
-        manufacturer: '',
-      });
-    }
-  }
-
-  handleChangeName(event) {
+  handleNameChange(event) {
     const value = event.target.value;
     this.setState({ name: value });
   }
@@ -65,6 +29,43 @@ class ModelForm extends React.Component {
   handleChangeManufacturer(event) {
     const value = event.target.value;
     this.setState({ manufacturer: value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = { ...this.state };
+
+    const vehicleModelUrl = 'http://localhost:8100/api/models/';
+    const fetchConfig = {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    fetch(vehicleModelUrl, fetchConfig)
+      .then(response => response.json())
+      .then(newVehicleModel => {
+        console.log(newVehicleModel);
+        this.setState({
+          name: '',
+          pictureUrl: '',
+          manufacturer: '',
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  async componentDidMount() {
+    const manufacturersUrl = 'http://localhost:8100/api/manufacturers/';
+    const response = await fetch(manufacturersUrl);
+    if (response.ok) {
+      const data = await response.json();
+      this.setState({ manufacturers: data.manufacturers });
+    }
   }
 
   render() {

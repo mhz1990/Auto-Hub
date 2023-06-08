@@ -16,7 +16,7 @@ class ManufacturerForm extends React.Component {
 
     const manufacturerUrl = 'http://localhost:8100/api/manufacturers/';
     const fetchConfig = {
-      method: 'post',
+      method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
