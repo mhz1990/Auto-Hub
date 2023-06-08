@@ -4,20 +4,22 @@ import App from './App';
 
 async function fetchData() {
   try {
-    const [manufacturersResponse, modelsResponse, automobilesResponse] = await Promise.all([
+    const [manufacturersResponse, modelsResponse, automobilesResponse, techniciansResponse] = await Promise.all([
       fetch('http://localhost:8100/api/manufacturers/'),
       fetch('http://localhost:8100/api/models/'),
       fetch('http://localhost:8100/api/automobiles/'),
+      fetch('http://localhost:8080/api/technicians/'),
     ]);
 
-    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok) {
+    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok || !techniciansResponse.ok) {
       throw new Error('Failed to fetch data');
     }
 
-    const [manufacturersData, modelsData, automobilesData] = await Promise.all([
+    const [manufacturersData, modelsData, automobilesData, techniciansData] = await Promise.all([
       manufacturersResponse.json(),
       modelsResponse.json(),
       automobilesResponse.json(),
+      techniciansResponse.json(),
     ]);
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,6 +29,7 @@ async function fetchData() {
           manufacturers={manufacturersData.manufacturers}
           models={modelsData.models}
           autos={automobilesData.autos}
+          technicians={techniciansData.technicians}
         />
       </React.StrictMode>
     );
