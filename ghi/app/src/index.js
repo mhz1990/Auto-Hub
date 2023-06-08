@@ -2,55 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+async function fetchData() {
+  try {
+    const [manufacturersResponse, modelsResponse, automobilesResponse] = await Promise.all([
+      fetch('http://localhost:8100/api/manufacturers/'),
+      fetch('http://localhost:8100/api/models/'),
+      fetch('http://localhost:8100/api/automobiles/'),
+    ]);
 
+    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok) {
+      throw new Error('Failed to fetch data');
+    }
 
-async function loadManufacturers() {
-  const response = await fetch('http://localhost:8100/api/manufacturers/');
-  if (response.ok) {
-    const data = await response.json();
+    const [manufacturersData, modelsData, automobilesData] = await Promise.all([
+      manufacturersResponse.json(),
+      modelsResponse.json(),
+      automobilesResponse.json(),
+    ]);
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(
       <React.StrictMode>
-        <App manufacturers={data.manufacturers} />
+        <App
+          manufacturers={manufacturersData.manufacturers}
+          models={modelsData.models}
+          automobiles={automobilesData.automobiles}
+        />
       </React.StrictMode>
     );
-  } else {
-    console.error(response);
+  } catch (error) {
+    console.error(error);
   }
 }
-loadManufacturers();
 
-async function loadModels() {
-  const response = await fetch('http://localhost:8100/api/models/');
-  if (response.ok) {
-    const data = await response.json();
-    root.render(
-      <React.StrictMode>
-        <App models={data.models} />
-      </React.StrictMode>
-    );
-  } else {
-    console.error(response);
-  }
-}
-loadModels();
-
-async function loadAutomobiles() {
-  const response = await fetch('http://localhost:8001/api/automobiles/');
-  if (response.ok) {
-    const data = await response.json();
-    root.render(
-      <React.StrictMode>
-        <App automobiles={data.automobiles} />
-      </React.StrictMode>
-    );
-  } else {
-    console.error(response);
-  }
-}
-loadAutomobiles();
+fetchData();

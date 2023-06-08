@@ -23,10 +23,10 @@ function Nav() {
               <NavLink className="nav-link" to="/models/create">Create a model</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/inventory">Automobiles</NavLink>
+              <NavLink className="nav-link" to="/automobiles">Automobiles</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/inventory/create">Create automobile</NavLink>
+              <NavLink className="nav-link" to="/automobiles/create">Create automobile</NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/customers">Customers</NavLink>
