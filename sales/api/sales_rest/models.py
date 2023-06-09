@@ -11,7 +11,7 @@ class AutomobileVO(models.Model):
 class Salesperson(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    employee_id = models.PositiveIntegerField(unique=True)
+    employee_id = models.CharField(max_length=30, unique=True)
 
 
 class Customer(models.Model):
@@ -19,13 +19,10 @@ class Customer(models.Model):
     last_name = models.CharField(max_length=50)
     address = models.TextField()
     phone_number = models.TextField(max_length=20, default=None)
-    customer_id = models.PositiveIntegerField(unique=True, default=None)
 
 
 class Sale(models.Model):
     price = models.FloatField()
-
-    # sale_id = models.PositiveIntegerField(unique=True, default=None)
 
     automobile = models.ForeignKey(
         AutomobileVO,
