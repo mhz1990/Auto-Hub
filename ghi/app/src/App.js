@@ -10,11 +10,14 @@ import AutomobileForm from './AutomobileForm';
 import TechnicianList from './TechnicianList';
 import CustomerList from './CustomerList';
 import CustomerForm from './CustomerForm';
+import AppointmentList from './AppointmentList';
+import TechnicianForm from './TechnicianForm';
+import TechnicianDeleteForm from './TechnicianDeleteForm';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 
 function App(props) {
-  const { manufacturers = [], models = [], autos = [], technicians = [], salespeople = [], customers = [] } = props;
+  const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [], salespeople = [], customers = [] } = props;
 
   return (
     <BrowserRouter>
@@ -25,14 +28,17 @@ function App(props) {
           <Route path="/manufacturers" index element={<ManufacturerList manufacturers={manufacturers} />} />
           <Route path="/manufacturers/create/" element={<ManufacturerForm />} />
           <Route path="/models" index element={<ModelList models={models} />} />
-          <Route path="/models/create" element={<ModelForm />} />
+          <Route path="/models/create/" element={<ModelForm />} />
           <Route path="/automobiles" index element={<AutomobileList automobiles={autos} />} />
           <Route path="/automobiles/create/" element={<AutomobileForm />} />
-          <Route path="/technicians" index element={<TechnicianList technicians={technicians} />} />
           <Route path="/customers" index element={<CustomerList customers={customers} />} />
           <Route path="/customers/create/" element={<CustomerForm />} />
           <Route path="/salespeople" index element={<SalespeopleList salespeople={salespeople} />} />
           <Route path="/salespeople/create" index element={<SalespeopleForm salespeople={salespeople} />} />
+          <Route path="/technicians" index element={<TechnicianList technicians={technicians} />} />
+          <Route path="/technicians/add/" element={<TechnicianForm />} />
+          <Route path="/technicians/delete/" element={<TechnicianDeleteForm />} />
+          <Route path="/appointments" index element={<AppointmentList appointments={appointments} />} />
         </Routes>
       </div>
     </BrowserRouter>
