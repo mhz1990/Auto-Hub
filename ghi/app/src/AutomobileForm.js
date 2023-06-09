@@ -7,18 +7,15 @@ class AutomobileForm extends React.Component {
             color: '',
             year: '',
             vin: '',
-            model: '',
+            model_id: '',
             models: [],
         };
-
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeColor = this.handleChangeColor.bind(this);
-        this.handleChangeYear = this.handleChangeYear.bind(this);
-        this.handleChangeVin = this.handleChangeVin.bind(this);
-        this.handleChangeModel = this.handleChangeModel.bind(this);
     }
 
     async componentDidMount() {
+
         const modelsUrl = 'http://localhost:8100/api/models/';
         const response = await fetch(modelsUrl);
         if (response.ok) {
@@ -33,7 +30,7 @@ class AutomobileForm extends React.Component {
             color: this.state.color,
             year: this.state.year,
             vin: this.state.vin,
-            model: this.state.model,
+            model_id: this.state.model_id,
         }
 
         const automobileUrl = 'http://localhost:8100/api/automobiles/';
@@ -44,43 +41,23 @@ class AutomobileForm extends React.Component {
                 'Content-Type': 'application/json',
             },
         };
-
         const response = await fetch(automobileUrl, fetchConfig);
         if (response.ok) {
             const newAutomobile = await response.json();
             console.log(newAutomobile);
 
-            const cleared = {
-                color: '',
-                year: '',
-                vin: '',
-                model: '',
-            };
+            const cleared = { color: '', year: '', vin: '', model_id: '' };
             this.setState(cleared);
         }
     }
-
-    handleChangeColor(event) {
-        const value = event.target.value;
-        this.setState({ color: value });
-    }
-
-    handleChangeYear(event) {
-        const value = event.target.value;
-        this.setState({ year: value });
-    }
-
-    handleChangeVin(event) {
-        const value = event.target.value;
-        this.setState({ vin: value });
-    }
-
-    handleChangeModel(event) {
-        const value = event.target.value;
-        this.setState({ model: value });
+    handleInputChange(event) {
+        const { name, value } = event.target;
+        this.setState({ [name]: value });
     }
 
     render() {
+        const { models } = this.state;
+
         return (
             <div className="row">
                 <div className="offset-3 col-6">
@@ -101,21 +78,21 @@ class AutomobileForm extends React.Component {
                             </div>
                             <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.model}
-                                    onChange={this.handleModelChange}
+                                    value={this.state.model_id}
+                                    onChange={this.handleInputChange}
                                     required
-                                    name="model"
-                                    id="model"
+                                    name="model_id"
+                                    id="model_id"
                                     className="form-select"
                                 >
                                     <option value="">Choose a model</option>
-                                    {this.state.models.map(model => (
+                                    {models.map((model) => (
                                         <option key={model.id} value={model.id}>
                                             {model.name}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="model">Model</label>
+                                <label htmlFor="model_id">Model</label>
                             </div>
                             <button className="btn btn-primary">Create</button>
                         </form>
