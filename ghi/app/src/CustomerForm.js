@@ -6,17 +6,17 @@ class CustomerForm extends React.Component {
         this.state = {
             first_name: '',
             last_name: '',
+            full_name: '',
             address: '',
             phone_number: '',
-            customer_id: '',
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
+        this.handleFullNameChange = this.handleFullNameChange.bind(this);
         this.handleAddressChange = this.handleAddressChange.bind(this);
         this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
-        this.handleCustomerIdChange = this.handleCustomerIdChange.bind(this);
     }
 
     async handleSubmit(event) {
@@ -49,6 +49,10 @@ class CustomerForm extends React.Component {
         const value = event.target.value;
         this.setState({ last_name: value });
     }
+    handleFullNameChange(event) {
+        const value = event.target.value;
+        this.setState({ full_name: value });
+    }
     handleAddressChange(event) {
         const value = event.target.value;
         this.setState({ address: value });
@@ -56,10 +60,6 @@ class CustomerForm extends React.Component {
     handlePhoneNumberChange(event) {
         const value = event.target.value;
         this.setState({ phone_number: value });
-    }
-    handleCustomerIdChange(event) {
-        const value = event.target.value;
-        this.setState({ customer_id: value });
     }
 
     render() {
@@ -78,16 +78,16 @@ class CustomerForm extends React.Component {
                                 <label htmlFor="lastName">Last Name</label>
                             </div>
                             <div className="form-floating mb-3">
+                                <input onChange={this.handleFullNameChange} placeholder="FullName" required type="text" name="fullName" id="fullName" className="form-control" />
+                                <label htmlFor="fullName">Full Name</label>
+                            </div>
+                            <div className="form-floating mb-3">
                                 <input onChange={this.handleAddressChange} placeholder="Address" required type="text" name="address" id="address" className="form-control" />
                                 <label htmlFor="address">Address</label>
                             </div>
                             <div className="form-floating mb-3">
                                 <input onChange={this.handlePhoneNumberChange} placeholder="PhoneNumber" required type="text" name="phoneNumber" id="phoneNumber" className="form-control" />
                                 <label htmlFor="phoneNumber">Phone Number</label>
-                            </div>
-                            <div className="form-floating mb-3">
-                                <input onChange={this.handleCustomerIdChange} placeholder="CustomerId" required type="text" name="customerId" id="customerId" className="form-control" />
-                                <label htmlFor="customerId">Customer ID</label>
                             </div>
                             <button className="btn btn-primary">Create</button>
                         </form>

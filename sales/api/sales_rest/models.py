@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 
 
-# Create your models here.
 class AutomobileVO(models.Model):
     vin = models.CharField(max_length=17, unique=True)
     sold = models.BooleanField(default=False)
@@ -11,14 +10,16 @@ class AutomobileVO(models.Model):
 class Salesperson(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=100, default="")
     employee_id = models.CharField(max_length=30, unique=True)
 
 
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=100, default="")
     address = models.TextField()
-    phone_number = models.TextField(max_length=20, default=None)
+    phone_number = models.TextField(max_length=20, default=None, unique=True)
 
 
 class Sale(models.Model):

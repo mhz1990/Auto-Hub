@@ -4,7 +4,7 @@ import App from './App';
 
 async function fetchData() {
   try {
-    const [manufacturersResponse, modelsResponse, automobilesResponse, techniciansResponse, appointmentsResponse, salespeopleResponse, customersResponse] = await Promise.all([
+    const [manufacturersResponse, modelsResponse, automobilesResponse, techniciansResponse, appointmentsResponse, salespeopleResponse, customersResponse, salesResponse] = await Promise.all([
       fetch('http://localhost:8100/api/manufacturers/'),
       fetch('http://localhost:8100/api/models/'),
       fetch('http://localhost:8100/api/automobiles/'),
@@ -12,13 +12,15 @@ async function fetchData() {
       fetch('http://localhost:8080/api/appointments/'),
       fetch('http://localhost:8090/api/salespeople/'),
       fetch('http://localhost:8090/api/customers/'),
+      fetch('http://localhost:8090/api/sales/'),
+
     ]);
 
-    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok || !techniciansResponse.ok || !appointmentsResponse.ok || !salespeopleResponse.ok || !customersResponse.ok) {
+    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok || !techniciansResponse.ok || !appointmentsResponse.ok || !salespeopleResponse.ok || !customersResponse.ok || !salesResponse.ok) {
       throw new Error('Failed to fetch data');
     }
 
-    const [manufacturersData, modelsData, automobilesData, techniciansData, appointmentsData, salespeopleData, customersData] = await Promise.all([
+    const [manufacturersData, modelsData, automobilesData, techniciansData, appointmentsData, salespeopleData, customersData, salesData] = await Promise.all([
       manufacturersResponse.json(),
       modelsResponse.json(),
       automobilesResponse.json(),
@@ -26,6 +28,7 @@ async function fetchData() {
       appointmentsResponse.json(),
       salespeopleResponse.json(),
       customersResponse.json(),
+      salesResponse.json(),
     ]);
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -39,6 +42,7 @@ async function fetchData() {
           appointments={appointmentsData.appointments}
           salespeople={salespeopleData.salespeople}
           customers={customersData.customers}
+          sales={salesData.sales}
         />
       </React.StrictMode>
     );
