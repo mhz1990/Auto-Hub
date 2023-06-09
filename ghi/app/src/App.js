@@ -30,7 +30,7 @@ function App(props) {
           <Route path="/models" index element={<ModelList models={models} />} />
           <Route path="/models/create/" element={<ModelForm />} />
           <Route path="/automobiles" index element={<AutomobileList automobiles={autos} />} />
-          <Route path="/automobiles/create/" element={<AutomobileForm />} />
+          <Route path="/automobiles/create/" element={<AutomobileForm models={models} />} />
           <Route path="/customers" index element={<CustomerList customers={customers} />} />
           <Route path="/customers/create/" element={<CustomerForm />} />
           <Route path="/salespeople" index element={<SalespeopleList salespeople={salespeople} />} />
