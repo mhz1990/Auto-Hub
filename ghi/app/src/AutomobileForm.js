@@ -22,7 +22,7 @@ class AutomobileForm extends React.Component {
         const url = 'http://localhost:8100/api/models/';
 
         const response = await fetch(url);
-        
+
         if (response.ok) {
             const data = await response.json();
             this.setState({ models: data.models });
