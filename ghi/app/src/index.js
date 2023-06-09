@@ -43,7 +43,7 @@ async function fetchData() {
       </React.StrictMode>
     );
   } catch (error) {
-    // console.error(error);
+    console.error(error);
   }
 }
 

@@ -19,10 +19,8 @@ class AutomobileForm extends React.Component {
     }
 
     async componentDidMount() {
-        const url = 'http://localhost:8100/api/models/';
-
-        const response = await fetch(url);
-
+        const modelsUrl = 'http://localhost:8100/api/models/';
+        const response = await fetch(modelsUrl);
         if (response.ok) {
             const data = await response.json();
             this.setState({ models: data.models });
@@ -31,27 +29,34 @@ class AutomobileForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const data = { ...this.state };
-        delete data.models;
+        const data = {
+            color: this.state.color,
+            year: this.state.year,
+            vin: this.state.vin,
+            model: this.state.model,
+        }
 
-        const modelUrl = 'http://localhost:8100/api/models/';
+        const automobileUrl = 'http://localhost:8100/api/automobiles/';
         const fetchConfig = {
-            method: "post",
+            method: 'post',
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(modelUrl, fetchConfig);
+
+        const response = await fetch(automobileUrl, fetchConfig);
         if (response.ok) {
             const newAutomobile = await response.json();
             console.log(newAutomobile);
-            this.setState({
+
+            const cleared = {
                 color: '',
                 year: '',
                 vin: '',
                 model: '',
-            });
+            };
+            this.setState(cleared);
         }
     }
 
@@ -94,15 +99,23 @@ class AutomobileForm extends React.Component {
                                 <input onChange={this.handleChangeVin} placeholder="VIN" required type="text" name="vin" id="vin" className="form-control" />
                                 <label htmlFor="vin">VIN</label>
                             </div>
-                            <div className="mb-3">
-                                <select onChange={this.handleChangeModel} required name="model" id="model" className="form-select">
+                            <div className="form-floating mb-3">
+                                <select
+                                    value={this.state.model}
+                                    onChange={this.handleModelChange}
+                                    required
+                                    name="model"
+                                    id="model"
+                                    className="form-select"
+                                >
                                     <option value="">Choose a model</option>
-                                    {this.state.model.map(model => {
-                                        return (
-                                            <option key={model.id} value={model.id}>{model.name}</option>
-                                        )
-                                    })}
+                                    {this.state.models.map(model => (
+                                        <option key={model.id} value={model.id}>
+                                            {model.name}
+                                        </option>
+                                    ))}
                                 </select>
+                                <label htmlFor="model">Model</label>
                             </div>
                             <button className="btn btn-primary">Create</button>
                         </form>
