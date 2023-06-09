@@ -6,13 +6,15 @@ import ModelList from "./ModelList";
 import AutomobileList from './AutomobileList';
 import ManufacturerForm from './ManufacturerForm';
 import ModelForm from './ModelForm';
+import AutomobileForm from './AutomobileForm';
 import TechnicianList from './TechnicianList';
 import AppointmentList from './AppointmentList';
 import TechnicianForm from './TechnicianForm';
 import TechnicianDeleteForm from './TechnicianDeleteForm';
+import SalespeopleList from './SalespeopleList';
 
 function App(props) {
-  const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [] } = props;
+  const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [], salespeople = [] } = props;
 
   return (
     <BrowserRouter>
@@ -41,6 +43,7 @@ function App(props) {
           <Route path="/appointments" index element={<AppointmentList appointments={appointments} />} />
           <Route path="/technicians/add/" element={<TechnicianForm />} />
           <Route path="/technicians/delete/" element={<TechnicianDeleteForm />} />
+          <Route path="/salespeople" index element={<SalespeopleList salespeople={salespeople} />} />
         </Routes>
       </div>
     </BrowserRouter>
