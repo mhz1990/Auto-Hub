@@ -9,6 +9,7 @@ import ModelForm from './ModelForm';
 import TechnicianList from './TechnicianList';
 import AppointmentList from './AppointmentList';
 import TechnicianForm from './TechnicianForm';
+import TechnicianDeleteForm from './TechnicianDeleteForm';
 
 function App(props) {
   const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [] } = props;
@@ -39,6 +40,7 @@ function App(props) {
           />
           <Route path="/appointments" index element={<AppointmentList appointments={appointments} />} />
           <Route path="/technicians/add/" element={<TechnicianForm />} />
+          <Route path="/technicians/delete/" element={<TechnicianDeleteForm />} />
         </Routes>
       </div>
     </BrowserRouter>
