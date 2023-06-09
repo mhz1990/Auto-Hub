@@ -5,18 +5,16 @@ class ModelForm extends React.Component {
     super(props)
     this.state = {
       name: '',
-      pictureUrl: '',
-      manufacturer: '',
-      manufacturers: [],
+      picture_url: '',
+      manufacturer_id: '',
+      manufacturers: []
     };
-
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handlePictureUrlChange = this.handlePictureUrlChange.bind(this);
-    this.handleManufacturerChange = this.handleManufacturerChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentDidMount() {
+
     const manufacturersUrl = 'http://localhost:8100/api/manufacturers/';
     const response = await fetch(manufacturersUrl);
     if (response.ok) {
@@ -29,48 +27,36 @@ class ModelForm extends React.Component {
     event.preventDefault();
     const data = {
       name: this.state.name,
-      picture_url: this.state.pictureUrl,
-      manufacturer: this.state.manufacturer,
+      picture_url: this.state.picture_url,
+      manufacturer_id: this.state.manufacturer_id
     };
 
-    const vehicleModelUrl = 'http://localhost:8100/api/models';
+    const modelUrl = 'http://localhost:8100/api/models/';
     const fetchConfig = {
-      method: 'post',
+      method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
       },
     };
-    const response = await fetch(vehicleModelUrl, fetchConfig);
+    const response = await fetch(modelUrl, fetchConfig);
     if (response.ok) {
-      const newVehicleModel = await response.json();
-      console.log(newVehicleModel);
+      const newModel = await response.json();
+      console.log(newModel);
 
-      const cleared = {
-        name: '',
-        pictureUrl: '',
-        manufacturer: '',
-      };
+      const cleared = { name: '', picture_url: '', manufacturer_id: '' };
       this.setState(cleared);
     }
   }
 
-  handleNameChange(event) {
-    const value = event.target.value;
-    this.setState({ name: value });
-  }
-
-  handlePictureUrlChange(event) {
-    const value = event.target.value;
-    this.setState({ pictureUrl: value });
-  }
-
-  handleManufacturerChange(event) {
-    const value = event.target.value;
-    this.setState({ manufacturer: value });
+  handleInputChange(event) {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
   render() {
+    const { manufacturers } = this.state;
+
     return (
       <div className="row">
         <div className="offset-3 col-6">
@@ -80,7 +66,7 @@ class ModelForm extends React.Component {
               <div className="form-floating mb-3">
                 <input
                   value={this.state.name}
-                  onChange={this.handleNameChange}
+                  onChange={this.handleInputChange}
                   placeholder="Name"
                   required
                   type="text"
@@ -92,8 +78,8 @@ class ModelForm extends React.Component {
               </div>
               <div className="form-floating mb-3">
                 <input
-                  value={this.state.pictureUrl}
-                  onChange={this.handlePictureUrlChange}
+                  value={this.state.picture_url}
+                  onChange={this.handleInputChange}
                   placeholder="Picture URL"
                   required
                   type="url"
@@ -105,21 +91,21 @@ class ModelForm extends React.Component {
               </div>
               <div className="form-floating mb-3">
                 <select
-                  value={this.state.manufacturer}
-                  onChange={this.handleManufacturerChange}
+                  value={this.state.manufacturer_id}
+                  onChange={this.handleInputChange}
                   required
-                  name="manufacturer"
-                  id="manufacturer"
+                  name="manufacturer_id"
+                  id="manufacturer_id"
                   className="form-select"
                 >
-                  <option value="">Choose a manufacturer</option>
-                  {this.state.manufacturers.map(manufacturer => (
+                  <option value="">Select a manufacturer</option>
+                  {manufacturers.map((manufacturer) => (
                     <option key={manufacturer.id} value={manufacturer.id}>
                       {manufacturer.name}
                     </option>
                   ))}
                 </select>
-                <label htmlFor="manufacturer">Manufacturer</label>
+                <label htmlFor="manufacturer_id">Manufacturer</label>
               </div>
               <button className="btn btn-primary">Create</button>
             </form>
