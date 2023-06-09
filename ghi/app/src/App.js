@@ -9,9 +9,10 @@ import ModelForm from './ModelForm';
 import AutomobileForm from './AutomobileForm';
 import TechnicianList from './TechnicianList';
 import SalespeopleList from './SalespeopleList';
+import CustomerList from './CustomerList';
 
 function App(props) {
-  const { manufacturers = [], models = [], autos = [], technicians = [], salespeople = [] } = props;
+  const { manufacturers = [], models = [], autos = [], technicians = [], salespeople = [], customers = [] } = props;
 
   return (
     <BrowserRouter>
@@ -43,6 +44,8 @@ function App(props) {
             element={<TechnicianList technicians={technicians} />}
           />
           <Route path="/salespeople" index element={<SalespeopleList salespeople={salespeople} />} />
+          <Route path="/customers" index element={<CustomerList customers={customers} />} />
+
         </Routes>
       </div>
     </BrowserRouter>
