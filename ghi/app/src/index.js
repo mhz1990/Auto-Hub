@@ -4,32 +4,26 @@ import App from './App';
 
 async function fetchData() {
   try {
-    const [manufacturersResponse, modelsResponse, automobilesResponse, customersResponse, salespeopleResponse, salesResponse, salespersonHistoryResponse, techniciansResponse] = await Promise.all([
+    const [manufacturersResponse, modelsResponse, automobilesResponse, techniciansResponse, salespeopleResponse] = await Promise.all([
       fetch('http://localhost:8100/api/manufacturers/'),
       fetch('http://localhost:8100/api/models/'),
       fetch('http://localhost:8100/api/automobiles/'),
-      fetch('http://localhost:8090/api/customers/'),
-      fetch('http://localhost:8090/api/sales/'),
-      fetch('http://localhost:8090/api/salespeople/'),
-      fetch('http://localhost:8090/api/salespersonHistory/'),
       fetch('http://localhost:8080/api/technicians/'),
+      fetch('http://localhost:8090/api/salespeople/'),
 
 
     ]);
 
-    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok || !customersResponse.ok || !salespeopleResponse.ok || !salesResponse.ok || !salespersonHistoryResponse) {
+    if (!manufacturersResponse.ok || !modelsResponse.ok || !automobilesResponse.ok || !techniciansResponse.ok || !salespeopleResponse.ok) {
       throw new Error('Failed to fetch data');
     }
 
-    const [manufacturersData, modelsData, automobilesData, customersData, salespersonsData, salesData, salespersonHistoryData, techniciansData] = await Promise.all([
+    const [manufacturersData, modelsData, automobilesData, techniciansData, salespeopleData] = await Promise.all([
       manufacturersResponse.json(),
       modelsResponse.json(),
       automobilesResponse.json(),
-      customersResponse.json(),
-      salespersonsResponse.json(),
-      salesResponse.json(),
-      salespersonHistoryResponse.json(),
       techniciansResponse.json(),
+      salespeopleResponse.json(),
     ]);
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -39,16 +33,13 @@ async function fetchData() {
           manufacturers={manufacturersData.manufacturers}
           models={modelsData.models}
           autos={automobilesData.autos}
-          customers={customersData.customers}
-          salespersons={salespersonsData.salespersons}
-          sales={salesData.sales}
-          salespersonHistory={salespersonHistoryData.salespersonHistoryData}
           technicians={techniciansData.technicians}
+          salespeople={salespeopleData.salespeople}
         />
       </React.StrictMode>
     );
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 }
 
