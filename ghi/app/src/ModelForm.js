@@ -2,7 +2,7 @@ import React from 'react';
 
 class ModelForm extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       name: '',
       picture_url: '',
