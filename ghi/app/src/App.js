@@ -7,9 +7,11 @@ import AutomobileList from './AutomobileList';
 import ManufacturerForm from './ManufacturerForm';
 import ModelForm from './ModelForm';
 import TechnicianList from './TechnicianList';
+import AppointmentList from './AppointmentList';
+import TechnicianForm from './TechnicianForm';
 
 function App(props) {
-  const { manufacturers = [], models = [], autos = [], technicians = [] } = props;
+  const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [] } = props;
 
   return (
     <BrowserRouter>
@@ -28,13 +30,15 @@ function App(props) {
             index
             element={<AutomobileList automobiles={autos} />}
           />
-          <Route path="/manufacturers/create" element={<ManufacturerForm />} />
-          <Route path="/models/create" element={<ModelForm />} />
+          <Route path="/manufacturers/create/" element={<ManufacturerForm />} />
+          <Route path="/models/create/" element={<ModelForm />} />
           <Route
             path="/technicians"
             index
             element={<TechnicianList technicians={technicians} />}
           />
+          <Route path="/appointments" index element={<AppointmentList appointments={appointments} />} />
+          <Route path="/technicians/add/" element={<TechnicianForm />} />
         </Routes>
       </div>
     </BrowserRouter>
