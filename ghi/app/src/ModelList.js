@@ -14,7 +14,7 @@ function ModelList(props) {
           <tr key={model.id}>
             <td>{model.name}</td>
             <td>
-              <img src={model.picture_url} alt={model.name} style={{ height: '50px' }} />
+              <img src={model.picture_url} alt={model.name} style={{ height: '150px' }} />
             </td>
           </tr>
         ))}

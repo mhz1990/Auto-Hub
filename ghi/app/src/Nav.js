@@ -8,7 +8,7 @@ function Nav() {
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse navbar-dark" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-">
             <div className="dropdown">
               <button className="btn dropdown-toggle" type="button" color="black" data-bs-toggle="dropdown" aria-expanded="false">
@@ -85,6 +85,34 @@ function Nav() {
                 </li>
                 <li className="nav-item">
                   <NavLink className="dropdown-item" to="/service-history">Service history</NavLink>
+                </li>
+              </ul>
+            </div>
+            <div className="dropdown">
+              <button className="btn dropdown-toggle" type="button" color="white" data-bs-toggle="dropdown" aria-expanded="false">
+                Finance
+              </button>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/customers">Customers</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/customers/create">Add customer</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/sales">Sales</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/sales/create">Add a sale</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/sales/history">Salesperson history</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/salespeople">Salespeople list</NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="dropdown-item" to="/salespeople/create">Add salesperson</NavLink>
                 </li>
               </ul>
             </div>
