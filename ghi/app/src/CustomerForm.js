@@ -21,7 +21,7 @@ class CustomerForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const data = { name: this.state.name };
+        const data = { ...this.state };
 
         const customerUrl = 'http://localhost:8090/api/customers/';
         const fetchConfig = {
@@ -35,9 +35,8 @@ class CustomerForm extends React.Component {
         if (response.ok) {
             const newCustomer = await response.json();
             console.log(newCustomer);
-
-            const cleared = { name: '' };
-            this.setState(cleared);
+            const cleared = { name: ''}
+            this.setState(cleared)
         }
     }
 

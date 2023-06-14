@@ -17,7 +17,7 @@ class SalespeopleForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const data = { name: this.state.name };
+        const data = { ...this.state };
 
         const salespeopleUrl = 'http://localhost:8090/api/salespeople/';
         const fetchConfig = {

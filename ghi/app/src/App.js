@@ -17,6 +17,7 @@ import TechnicianDeleteForm from './TechnicianDeleteForm';
 import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 import SalesList from './SalesList';
+import SaleForm from './Saleform';
 
 
 function App(props) {
@@ -43,7 +44,8 @@ function App(props) {
           <Route path="/technicians/delete/" element={<TechnicianDeleteForm />} />
           <Route path="/appointments" index element={<AppointmentList appointments={appointments} />} />
           <Route path="/appointments/create/" element={<AppointmentForm />} />
-          <Route path="/sales" index element={<SalesList sales={sales} />} />
+          <Route path="/sales/" index element={<SalesList sales={sales} />} />
+          <Route path="/sales/create/" element={<SaleForm />} />
         </Routes>
       </div>
     </BrowserRouter>
