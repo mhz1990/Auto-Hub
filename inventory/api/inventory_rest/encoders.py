@@ -28,11 +28,11 @@ class AutomobileEncoder(ModelEncoder):
     model = Automobile
     properties = [
         "id",
+        "sold",
         "color",
         "year",
         "vin",
         "model",
-        "sold",
     ]
     encoders = {
         "model": VehicleModelEncoder(),
