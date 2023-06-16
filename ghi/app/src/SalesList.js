@@ -9,8 +9,8 @@ function SalesList(props) {
                     <tr>
                         <th>Customer</th>
                         <th>Salesperson</th>
-                        <th>Salesperson ID</th>
-                        <th>VIN</th>
+                        <th>Employee ID</th>
+                        <th>Automobile VIN</th>
                         <th>Price</th>
                     </tr>
                 </thead>
@@ -21,7 +21,7 @@ function SalesList(props) {
                             <td>{sales.salesperson.last_name}</td>
                             <td>{sales.salesperson.employee_id}</td>
                             <td>{sales.automobile.vin}</td>
-                            <td>{sales.price}</td>
+                            <td>${sales.price}.99</td>
                         </tr>
                     ))}
                 </tbody>

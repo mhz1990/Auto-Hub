@@ -9,42 +9,73 @@ class SaleForm extends React.Component {
             automobiles: [],
             salesperson_id: '',
             salespeople: [],
-            salesperson_id_id: '',
-            salespeople_id: [],
+            // employee_id_id: '',
+            // employee_id: [],
             customer_id: '',
             customers: []
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handlePriceChange = this.handlePriceChange.bind(this);
-        this.handleAutomobileChange = this.handleAutomobileChange.bind(this);
-        this.handleSalespersonChange = this.handleSalespersonChange.bind(this);
-        this.handleSalespersonIdChange = this.handleSalespersonIdChange.bind(this);
-        this.handleCustomerChange = this.handleCustomerChange.bind(this);
+        // this.handlePriceChange = this.handlePriceChange.bind(this);
+        // this.handleAutomobileChange = this.handleAutomobileChange.bind(this);
+        // this.handleSalespersonChange = this.handleSalespersonChange.bind(this);
+        // this.handleEmployeeIdChange = this.handleEmployeeIdChange.bind(this);
+        // this.handleCustomerChange = this.handleCustomerChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     async componentDidMount() {
 
         const automobilesUrl = 'http://localhost:8100/api/automobiles/';
-        const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
-        const customersUrl = 'http://localhost:8090/api/customers/';
-        const response = await fetch(automobilesUrl, salespeopleUrl, customersUrl);
+        // const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
+        // const customersUrl = 'http://localhost:8090/api/customers/';
+        // const response = await fetch(automobilesUrl, salespeopleUrl, customersUrl);
+        // const response = await fetch(customersUrl);
+        // const response = await fetch(salespeopleUrl);
+        const response = await fetch(automobilesUrl);
         if (response.ok) {
             const data = await response.json();
             this.setState({
                 automobiles: data.automobiles,
                 salespeople: data.salespeople,
-                customers: data.customers,
+                // customers: data.customers,
             });
         }
+
     }
 
-    async handleSubmit(event) {
-        event.preventDefault();
-        const data = { ...this.state };
+    // async handleSubmit(event) {
+    //     event.preventDefault();
+    //     const data = { ...this.state };
 
-        const salesUrl = 'http://localhost:8100/api/sales/';
+    //     const salesUrl = 'http://localhost:8100/api/sales/';
+    //     const fetchConfig = {
+    //         method: 'POST',
+    //         body: JSON.stringify(data),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     };
+    //     const response = await fetch(salesUrl, fetchConfig);
+    //     if (response.ok) {
+    //         const newSale = await response.json();
+    //         console.log(newSale);
+
+    //         const cleared = { name: '' };
+    //         this.setState(cleared);
+    //     }
+    // }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = {
+            price: this.state.price,
+            automobile_id: this.state.automobile_id,
+            employee_id: this.state.employee_id,
+            customer_id: this.state.customer_id,
+        };
+
+        const saleUrl = 'http://localhost:8090/api/sales/';
         const fetchConfig = {
             method: 'POST',
             body: JSON.stringify(data),
@@ -52,43 +83,51 @@ class SaleForm extends React.Component {
                 'Content-Type': 'application/json',
             },
         };
-        const response = await fetch(salesUrl, fetchConfig);
-        if (response.ok) {
-            const newSale = await response.json();
-            console.log(newSale);
-
-            const cleared = { name: '' };
-            this.setState(cleared);
-        }
+        fetch(saleUrl, fetchConfig)
+            .then(response => response.json())
+            .then(newSale => {
+                console.log(newSale);
+                const cleared = {
+                    price: '',
+                    automobile_id: '',
+                    salesperson_id: '',
+                    customer_id: '',
+                };
+                this.setState(cleared);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
     }
-    handlePriceChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-    handleAutomobileChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-    handleSalespersonChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-    handleSalespersonIdChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
-    handleCustomerChange(event) {
-        const { name, value } = event.target;
-        this.setState({ [name]: value });
-    }
+    // handlePriceChange(event) {
+    //     const { name, value } = event.target;
+    //     this.setState({ [name]: value });
+    // }
+    // handleAutomobileChange(event) {
+    //     const { name, value } = event.target;
+    //     this.setState({ [name]: value });
+    // }
+    // handleSalespersonChange(event) {
+    //     const { name, value } = event.target;
+    //     this.setState({ [name]: value });
+    // }
+    // handleEmployeeIdChange(event) {
+    //     const { name, value } = event.target;
+    //     this.setState({ [name]: value });
+    // }
+    // handleCustomerChange(event) {
+    //     const { name, value } = event.target;
+    //     this.setState({ [name]: value });
+    // }
     render() {
         const { automobiles } = this.state;
         const { salespeople } = this.state;
+        // const { employee_id } = this.state;
         const { customers } = this.state;
 
         return (
@@ -96,7 +135,7 @@ class SaleForm extends React.Component {
                 <div className="offset-3 col-6">
                     <div className="shadow p-4 mt-4">
                         <h1>Create a new sale</h1>
-                        <form onSubmit={this.handleSubmit} id="create-vehicle-model-form">
+                        <form onSubmit={this.handleSubmit} id="create-sale-form">
                             <div className="form-floating mb-3">
                                 <input
                                     value={this.state.price}
@@ -120,13 +159,13 @@ class SaleForm extends React.Component {
                                     className="form-select"
                                 >
                                     <option value="">Select automobile</option>
-                                    {automobiles.map((automobile) => (
-                                        <option key={automobile.vin} value={automobile.vin}>
+                                    {automobiles.map(automobile => (
+                                        <option key={automobile.id} value={automobile.id}>
                                             {automobile.vin}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="manufacturer_id">Automobile</label>
+                                <label htmlFor="automobile_id">Automobile</label>
                             </div>
                             <div className="form-floating mb-3">
                                 <select
@@ -140,30 +179,30 @@ class SaleForm extends React.Component {
                                     <option value="">Select salesperson</option>
                                     {salespeople.map((salesperson) => (
                                         <option key={salesperson.id} value={salesperson.id}>
-                                            {salesperson.name}
+                                            {salesperson.last_name}
                                         </option>
                                     ))}
                                 </select>
                                 <label htmlFor="salesperson_id">Salesperson</label>
                             </div>
-                            <div className="form-floating mb-3">
+                            {/* <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.salesperson_id_id}
+                                    value={this.state.employee_id_id}
                                     onChange={this.handleInputChange}
                                     required
-                                    name="salesperson_id_id"
-                                    id="salesperson_id_id"
+                                    name="employee_id_id"
+                                    id="employee_id_id"
                                     className="form-select"
                                 >
-                                    <option value="">Select salesperson ID</option>
-                                    {salespeople_id.map((salesperson_id) => (
-                                        <option key={salesperson_id.id} value={salesperson_id.id}>
-                                            {salesperson_id.name}
+                                    <option value="">Select employee ID</option>
+                                    {employee_id.map((employees_id) => (
+                                        <option key={employees_id.id} value={employees_id.id}>
+                                            {employees_id.employee_id}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="salesperson_id_id">Salesperson ID</label>
-                            </div>
+                                <label htmlFor="employee_id_id">Employee ID</label>
+                            </div> */}
                             <div className="form-floating mb-3">
                                 <select
                                     value={this.state.customer_id}
@@ -174,9 +213,9 @@ class SaleForm extends React.Component {
                                     className="form-select"
                                 >
                                     <option value="">Select customer</option>
-                                    {customers.map((customer) => (
+                                    {customers.map(customer => (
                                         <option key={customer.id} value={customer.id}>
-                                            {customer.name}
+                                            {customer.first_name}
                                         </option>
                                     ))}
                                 </select>
