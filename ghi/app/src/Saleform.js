@@ -7,12 +7,12 @@ class SaleForm extends React.Component {
             price: '',
             automobile: '',
             automobiles: [],
-            // salesperson_id: '',
-            // salespeople: [],
-            // employee_id_id: '',
-            // employee_id: [],
-            // customer_id: '',
-            // customers: []
+            salesperson: '',
+            salespeople: [],
+            employee: '',
+            employees: [],
+            customer: '',
+            customers: []
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,25 +20,69 @@ class SaleForm extends React.Component {
 
     componentDidMount() {
         this.fetchAutomobiles();
+        this.fetchSalespeople();
+        this.fetchEmployees();
+        this.fetchCustomers();
     }
 
     async fetchAutomobiles() {
         try {
             const automobilesUrl = 'http://localhost:8100/api/automobiles/';
-            // const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
-            // const customersUrl = 'http://localhost:8090/api/customers/';
-            // const response = await fetch(automobilesUrl, salespeopleUrl, customersUrl);
-            // const response = await fetch(customersUrl);
-            // const response = await fetch(salespeopleUrl);
             const response = await fetch(automobilesUrl);
             if (!response.ok) {
                 throw new Error('Failed to fetch automobiles.');
             }
             const data = await response.json();
             this.setState({
-                automobiles: data.automobile,
-                // salespeople: data.salespeople,
-                // customers: data.customers,
+                automobiles: data.autos,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async fetchSalespeople() {
+        try {
+            const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
+            const response = await fetch(salespeopleUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch salespeople.');
+            }
+            const data = await response.json();
+            this.setState({
+                salespeople: data.salespeople,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async fetchEmployees() {
+        try {
+            const employeesUrl = 'http://localhost:8090/api/salespeople/';
+            const response = await fetch(employeesUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch employees.');
+            }
+            const data = await response.json();
+            this.setState({
+                employees: data.salespeople,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async fetchCustomers() {
+        try {
+            const customersUrl = 'http://localhost:8090/api/customers/';
+            const response = await fetch(customersUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch customers.');
+            }
+            const data = await response.json();
+            this.setState({
+                customers: data.customers,
             });
         } catch (error) {
             console.error(error);
@@ -48,27 +92,6 @@ class SaleForm extends React.Component {
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
-
-        // handlePriceChange(event) {
-        //     const { name, value } = event.target;
-        //     this.setState({ [name]: value });
-        // }
-        // handleAutomobileChange(event) {
-        //     const { name, value } = event.target;
-        //     this.setState({ [name]: value });
-        // }
-        // handleSalespersonChange(event) {
-        //     const { name, value } = event.target;
-        //     this.setState({ [name]: value });
-        // }
-        // handleEmployeeIdChange(event) {
-        //     const { name, value } = event.target;
-        //     this.setState({ [name]: value });
-        // }
-        // handleCustomerChange(event) {
-        //     const { name, value } = event.target;
-        //     this.setState({ [name]: value });
-        // }
     }
 
     async handleSubmit(event) {
@@ -76,8 +99,9 @@ class SaleForm extends React.Component {
         const data = {
             price: this.state.price,
             automobile: this.state.automobile,
-            // employee_id: this.state.employee_id,
-            // customer_id: this.state.customer_id,
+            salesperson: this.state.salesperson,
+            employee: this.state.employee,
+            customer: this.state.customer,
         };
 
         try {
@@ -99,6 +123,9 @@ class SaleForm extends React.Component {
             const cleared = {
                 price: '',
                 automobile: '',
+                salespeople: '',
+                employees: '',
+                customers: '',
             };
             this.setState(cleared)
         } catch (error) {
@@ -107,10 +134,10 @@ class SaleForm extends React.Component {
     }
 
     render() {
-        // const { automobiles } = this.state;
-        // const { salespeople } = this.state;
-        // const { employee_id } = this.state;
-        // const { customers } = this.state;
+        const { automobiles } = this.state;
+        const { salespeople } = this.state;
+        const { employees } = this.state;
+        const { customers } = this.state;
 
         return (
             <div className="row">
@@ -141,7 +168,7 @@ class SaleForm extends React.Component {
                                     className="form-select"
                                 >
                                     <option value="">Select automobile</option>
-                                    {this.state.automobiles.map((automobile) => (
+                                    {automobiles.map((automobile) => (
                                         <option key={automobile.id} value={automobile.id}>
                                             {automobile.vin}
                                         </option>
@@ -149,13 +176,13 @@ class SaleForm extends React.Component {
                                 </select>
                                 <label htmlFor="automobile">Automobile</label>
                             </div>
-                            {/* <div className="form-floating mb-3">
+                            <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.salesperson_id}
+                                    value={this.state.salesperson}
                                     onChange={this.handleInputChange}
                                     required
-                                    name="salesperson_id"
-                                    id="salesperson_id"
+                                    name="salesperson"
+                                    id="salesperson"
                                     className="form-select"
                                     >
                                     <option value="">Select salesperson</option>
@@ -165,33 +192,33 @@ class SaleForm extends React.Component {
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="salesperson_id">Salesperson</label>
-                            </div> */}
-                            {/* <div className="form-floating mb-3">
+                                <label htmlFor="salesperson">Salesperson</label>
+                            </div>
+                            <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.employee_id_id}
+                                    value={this.state.employee}
                                     onChange={this.handleInputChange}
                                     required
-                                    name="employee_id_id"
-                                    id="employee_id_id"
+                                    name="employee"
+                                    id="employee"
                                     className="form-select"
                                     >
                                     <option value="">Select employee ID</option>
-                                    {employee_id.map((employees_id) => (
-                                        <option key={employees_id.id} value={employees_id.id}>
-                                            {employees_id.employee_id}
+                                    {employees.map((employees) => (
+                                        <option key={employees.id} value={employees.id}>
+                                            {employees.employee_id}
                                             </option>
                                             ))}
                                 </select>
-                                <label htmlFor="employee_id_id">Employee ID</label>
-                            </div> */}
-                            {/* <div className="form-floating mb-3">
+                                <label htmlFor="employee">Employee ID</label>
+                            </div>
+                            <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.customer_id}
+                                    value={this.state.customer}
                                     onChange={this.handleInputChange}
                                     required
-                                    name="customer_id"
-                                    id="customer_id"
+                                    name="customer"
+                                    id="customer"
                                     className="form-select"
                                     >
                                     <option value="">Select customer</option>
@@ -201,8 +228,8 @@ class SaleForm extends React.Component {
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="customer_id">Customer</label>
-                            </div> */}
+                                <label htmlFor="customer">Customer</label>
+                            </div>
                             <button className="btn btn-primary">Create</button>
                         </form>
                     </div>
