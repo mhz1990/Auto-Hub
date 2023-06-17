@@ -5,130 +5,112 @@ class SaleForm extends React.Component {
         super(props)
         this.state = {
             price: '',
-            automobile_id: '',
+            automobile: '',
             automobiles: [],
-            salesperson_id: '',
-            salespeople: [],
+            // salesperson_id: '',
+            // salespeople: [],
             // employee_id_id: '',
             // employee_id: [],
-            customer_id: '',
-            customers: []
+            // customer_id: '',
+            // customers: []
         };
-
         this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handlePriceChange = this.handlePriceChange.bind(this);
-        // this.handleAutomobileChange = this.handleAutomobileChange.bind(this);
-        // this.handleSalespersonChange = this.handleSalespersonChange.bind(this);
-        // this.handleEmployeeIdChange = this.handleEmployeeIdChange.bind(this);
-        // this.handleCustomerChange = this.handleCustomerChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async componentDidMount() {
-
-        const automobilesUrl = 'http://localhost:8100/api/automobiles/';
-        // const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
-        // const customersUrl = 'http://localhost:8090/api/customers/';
-        // const response = await fetch(automobilesUrl, salespeopleUrl, customersUrl);
-        // const response = await fetch(customersUrl);
-        // const response = await fetch(salespeopleUrl);
-        const response = await fetch(automobilesUrl);
-        if (response.ok) {
-            const data = await response.json();
-            this.setState({
-                automobiles: data.automobiles,
-                salespeople: data.salespeople,
-                // customers: data.customers,
-            });
-        }
-
+    componentDidMount() {
+        this.fetchAutomobiles();
     }
 
-    // async handleSubmit(event) {
-    //     event.preventDefault();
-    //     const data = { ...this.state };
-
-    //     const salesUrl = 'http://localhost:8100/api/sales/';
-    //     const fetchConfig = {
-    //         method: 'POST',
-    //         body: JSON.stringify(data),
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //     };
-    //     const response = await fetch(salesUrl, fetchConfig);
-    //     if (response.ok) {
-    //         const newSale = await response.json();
-    //         console.log(newSale);
-
-    //         const cleared = { name: '' };
-    //         this.setState(cleared);
-    //     }
-    // }
-
-    handleSubmit(event) {
-        event.preventDefault();
-        const data = {
-            price: this.state.price,
-            automobile_id: this.state.automobile_id,
-            employee_id: this.state.employee_id,
-            customer_id: this.state.customer_id,
-        };
-
-        const saleUrl = 'http://localhost:8090/api/sales/';
-        const fetchConfig = {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-        fetch(saleUrl, fetchConfig)
-            .then(response => response.json())
-            .then(newSale => {
-                console.log(newSale);
-                const cleared = {
-                    price: '',
-                    automobile_id: '',
-                    salesperson_id: '',
-                    customer_id: '',
-                };
-                this.setState(cleared);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+    async fetchAutomobiles() {
+        try {
+            const automobilesUrl = 'http://localhost:8100/api/automobiles/';
+            // const salespeopleUrl = 'http://localhost:8090/api/salespeople/'
+            // const customersUrl = 'http://localhost:8090/api/customers/';
+            // const response = await fetch(automobilesUrl, salespeopleUrl, customersUrl);
+            // const response = await fetch(customersUrl);
+            // const response = await fetch(salespeopleUrl);
+            const response = await fetch(automobilesUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch automobiles.');
+            }
+            const data = await response.json();
+            this.setState({
+                automobiles: data.automobile,
+                // salespeople: data.salespeople,
+                // customers: data.customers,
             });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     handleInputChange(event) {
         const { name, value } = event.target;
         this.setState({ [name]: value });
+
+        // handlePriceChange(event) {
+        //     const { name, value } = event.target;
+        //     this.setState({ [name]: value });
+        // }
+        // handleAutomobileChange(event) {
+        //     const { name, value } = event.target;
+        //     this.setState({ [name]: value });
+        // }
+        // handleSalespersonChange(event) {
+        //     const { name, value } = event.target;
+        //     this.setState({ [name]: value });
+        // }
+        // handleEmployeeIdChange(event) {
+        //     const { name, value } = event.target;
+        //     this.setState({ [name]: value });
+        // }
+        // handleCustomerChange(event) {
+        //     const { name, value } = event.target;
+        //     this.setState({ [name]: value });
+        // }
     }
-    // handlePriceChange(event) {
-    //     const { name, value } = event.target;
-    //     this.setState({ [name]: value });
-    // }
-    // handleAutomobileChange(event) {
-    //     const { name, value } = event.target;
-    //     this.setState({ [name]: value });
-    // }
-    // handleSalespersonChange(event) {
-    //     const { name, value } = event.target;
-    //     this.setState({ [name]: value });
-    // }
-    // handleEmployeeIdChange(event) {
-    //     const { name, value } = event.target;
-    //     this.setState({ [name]: value });
-    // }
-    // handleCustomerChange(event) {
-    //     const { name, value } = event.target;
-    //     this.setState({ [name]: value });
-    // }
+
+    async handleSubmit(event) {
+        event.preventDefault();
+        const data = {
+            price: this.state.price,
+            automobile: this.state.automobile,
+            // employee_id: this.state.employee_id,
+            // customer_id: this.state.customer_id,
+        };
+
+        try {
+            const salesUrl = 'http://localhost:8090/api/sales/';
+            const response = await fetch(salesUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create sale.');
+            }
+
+            console.log('Sale created: ', data);
+
+            const cleared = {
+                price: '',
+                automobile: '',
+            };
+            this.setState(cleared)
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     render() {
         const { automobiles } = this.state;
-        const { salespeople } = this.state;
+        // const { salespeople } = this.state;
         // const { employee_id } = this.state;
-        const { customers } = this.state;
+        // const { customers } = this.state;
 
         return (
             <div className="row">
@@ -151,23 +133,23 @@ class SaleForm extends React.Component {
                             </div>
                             <div className="form-floating mb-3">
                                 <select
-                                    value={this.state.automobile_id}
+                                    value={this.state.automobile}
                                     onChange={this.handleInputChange}
                                     required
-                                    name="automobile_id"
-                                    id="automobile_id"
+                                    name="automobile"
+                                    id="automobile"
                                     className="form-select"
                                 >
                                     <option value="">Select automobile</option>
-                                    {automobiles.map(automobile => (
+                                    {automobiles.map((automobile) => (
                                         <option key={automobile.id} value={automobile.id}>
                                             {automobile.vin}
                                         </option>
                                     ))}
                                 </select>
-                                <label htmlFor="automobile_id">Automobile</label>
+                                <label htmlFor="automobile">Automobile</label>
                             </div>
-                            <div className="form-floating mb-3">
+                            {/* <div className="form-floating mb-3">
                                 <select
                                     value={this.state.salesperson_id}
                                     onChange={this.handleInputChange}
@@ -175,7 +157,7 @@ class SaleForm extends React.Component {
                                     name="salesperson_id"
                                     id="salesperson_id"
                                     className="form-select"
-                                >
+                                    >
                                     <option value="">Select salesperson</option>
                                     {salespeople.map((salesperson) => (
                                         <option key={salesperson.id} value={salesperson.id}>
@@ -184,7 +166,7 @@ class SaleForm extends React.Component {
                                     ))}
                                 </select>
                                 <label htmlFor="salesperson_id">Salesperson</label>
-                            </div>
+                            </div> */}
                             {/* <div className="form-floating mb-3">
                                 <select
                                     value={this.state.employee_id_id}
@@ -193,17 +175,17 @@ class SaleForm extends React.Component {
                                     name="employee_id_id"
                                     id="employee_id_id"
                                     className="form-select"
-                                >
+                                    >
                                     <option value="">Select employee ID</option>
                                     {employee_id.map((employees_id) => (
                                         <option key={employees_id.id} value={employees_id.id}>
                                             {employees_id.employee_id}
-                                        </option>
-                                    ))}
+                                            </option>
+                                            ))}
                                 </select>
                                 <label htmlFor="employee_id_id">Employee ID</label>
                             </div> */}
-                            <div className="form-floating mb-3">
+                            {/* <div className="form-floating mb-3">
                                 <select
                                     value={this.state.customer_id}
                                     onChange={this.handleInputChange}
@@ -211,7 +193,7 @@ class SaleForm extends React.Component {
                                     name="customer_id"
                                     id="customer_id"
                                     className="form-select"
-                                >
+                                    >
                                     <option value="">Select customer</option>
                                     {customers.map(customer => (
                                         <option key={customer.id} value={customer.id}>
@@ -220,7 +202,7 @@ class SaleForm extends React.Component {
                                     ))}
                                 </select>
                                 <label htmlFor="customer_id">Customer</label>
-                            </div>
+                            </div> */}
                             <button className="btn btn-primary">Create</button>
                         </form>
                     </div>
@@ -229,5 +211,4 @@ class SaleForm extends React.Component {
         );
     }
 }
-
 export default SaleForm;
