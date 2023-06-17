@@ -107,7 +107,7 @@ class SaleForm extends React.Component {
     }
 
     render() {
-        const { automobiles } = this.state;
+        // const { automobiles } = this.state;
         // const { salespeople } = this.state;
         // const { employee_id } = this.state;
         // const { customers } = this.state;
@@ -141,7 +141,7 @@ class SaleForm extends React.Component {
                                     className="form-select"
                                 >
                                     <option value="">Select automobile</option>
-                                    {automobiles.map((automobile) => (
+                                    {this.state.automobiles.map((automobile) => (
                                         <option key={automobile.id} value={automobile.id}>
                                             {automobile.vin}
                                         </option>
