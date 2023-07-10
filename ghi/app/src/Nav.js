@@ -9,7 +9,7 @@ function Nav() {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse navbar-dark" id="navbarSupportedContent">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0 px-">
+          <ul className="navbar-nav mb-2 mb-lg-0 px-">
             <div className="dropdown">
               <button className="btn dropdown-toggle" type="button" color="black" data-bs-toggle="dropdown" aria-expanded="false">
                 Inventory

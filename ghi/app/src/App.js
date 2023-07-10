@@ -18,13 +18,14 @@ import SalespeopleList from './SalespeopleList';
 import SalespeopleForm from './SalespeopleForm';
 import SalesList from './SalesList';
 import SaleForm from './Saleform';
-
+import './App.css';
 
 function App(props) {
   const { manufacturers = [], models = [], autos = [], technicians = [], appointments = [], salespeople = [], customers = [], sales = [] } = props;
 
   return (
     <BrowserRouter>
+    <div className="bg">
       <Nav />
       <div className="container">
         <Routes>
@@ -48,6 +49,7 @@ function App(props) {
           <Route path="/sales/create/" element={<SaleForm />} />
         </Routes>
       </div>
+    </div>
     </BrowserRouter>
   );
 }

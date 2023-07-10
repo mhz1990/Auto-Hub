@@ -4,7 +4,7 @@ function MainPage() {
       <h1 className="display-6 fw-bold m-auto">Auto Hub</h1>
       <div className="col-lg-6 mx-auto">
         <p className="lead mb-4">
-          The premiere solution for automobile dealership
+          The premiere solution for luxury automobile dealership
           management!
         </p>
       </div>
