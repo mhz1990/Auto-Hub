@@ -2,8 +2,8 @@
 
 Team:
 
-* Matt Hoadley - Sales
-* Wilbert Machuca - Services
+- Matt Hoadley - Sales
+- Wilbert Machuca - Services
 
 ## Design
 
@@ -23,6 +23,7 @@ My approach is to begin by creating models for the data. Next, I'll create view 
 
     14 June 2023- Corrected handleSubmit functions in CustomerForm.js and SalespeopleForm.js, forms now posting properly from frontend to backend.
 
+    10 July 2023- Updated App.css to add background photo for entire application. Needs still support to scale background size across different device sizes.
 
 ## Service microservice
 
